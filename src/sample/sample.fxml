@@ -24,8 +24,8 @@
          <children>
             <AnchorPane layoutX="7.0" layoutY="42.0" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: LightSeaGreen;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Button fx:id="btSearch" layoutX="165.0" layoutY="14.0" mnemonicParsing="false" text="Add" />
-                  <TextField fx:id="tfSearch" layoutX="14.0" layoutY="14.0" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
+                  <Button fx:id="btSearch" layoutX="153.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
+                  <TextField fx:id="tfSearch" layoutY="14.0" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="14.0" />
                   <ListView fx:id="lvTarget" layoutX="14.0" layoutY="55.0" opacity="0.3" prefHeight="200.0" prefWidth="201.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
                </children>
             </AnchorPane>
