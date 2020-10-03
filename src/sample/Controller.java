@@ -1,5 +1,7 @@
 package sample;
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
+import com.sun.glass.ui.EventLoop;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -12,6 +14,8 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+
+import java.sql.*;
 
 public class Controller implements Initializable {
 
@@ -29,9 +33,15 @@ public class Controller implements Initializable {
 
     Map<String, String> dictionary = new HashMap<>();
 
+    public String lookUpInDatabase(String word) {
+        //String query = "SELECT * FROM " + DatabaseConfig.DatabaseName +
+        return "";
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle recourses) {
         initializeDictionary();
+
         btSearch.setOnMouseClicked(mouseEvent -> {
             String searchedWord = tfSearch.getText().trim();
             if (searchedWord != null && searchedWord.equals("") == false) {
@@ -57,10 +67,22 @@ public class Controller implements Initializable {
     }
 
     public void initializeDictionary() {
-        dictionary.put("hello", "Xin chào");
-        dictionary.put("thank you", "Cảm ơn");
-        dictionary.put("school", "Trường học");
-        dictionary.put("class", "Lớp học");
-        lvTarget.getItems().addAll(dictionary.keySet());
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wjbu", "root", "root");
+            Statement state = conn.createStatement();
+            ResultSet rs = state.executeQuery("SELECT * FROM wjbu.dictev");
+
+            while(rs.next()) {
+                lvTarget.getItems().add(rs.getString("word"));
+            }
+
+            conn.close();
+            state.close();
+            rs.close();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 }

@@ -22,14 +22,14 @@
    <children>
       <AnchorPane style="-fx-background-color: #4682B4;" GridPane.columnIndex="2">
          <children>
-            <AnchorPane layoutX="7.0" layoutY="42.0" prefHeight="400.0" prefWidth="220.0" style="-fx-background-color: LightSeaGreen;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <AnchorPane layoutX="7.0" layoutY="42.0" prefHeight="400.0" prefWidth="242.0" style="-fx-background-color: LightSeaGreen;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <Button fx:id="btSearch" layoutX="153.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
-                  <TextField fx:id="tfSearch" layoutY="14.0" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="14.0" />
+                  <Button fx:id="btSearch" layoutX="167.0" layoutY="14.0" mnemonicParsing="false" text="Search" />
+                  <TextField fx:id="tfSearch" layoutX="10.0" layoutY="14.0" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
                   <ListView fx:id="lvTarget" layoutX="14.0" layoutY="55.0" opacity="0.3" prefHeight="200.0" prefWidth="201.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="244.0" layoutY="63.0" prefHeight="400.0" prefWidth="450.0" style="-fx-background-color: #8FBC8F;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+            <AnchorPane layoutX="253.0" layoutY="63.0" prefHeight="400.0" prefWidth="437.0" style="-fx-background-color: #8FBC8F;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
                   <TextArea fx:id="taMeaning" layoutX="14.0" layoutY="55.0" opacity="0.3" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ADD8E6;" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
                </children>
