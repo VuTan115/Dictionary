@@ -1,0 +1,4 @@
+
+hello	xin chào
+help	giúp đỡ
+cat	con mèo
