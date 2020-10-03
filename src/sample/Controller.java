@@ -1,7 +1,5 @@
 package sample;
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
-import com.sun.glass.ui.EventLoop;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,8 +9,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 import java.sql.*;
@@ -31,12 +27,9 @@ public class Controller implements Initializable {
     @FXML
     public TextArea taMeaning = new TextArea();
 
-    Map<String, String> dictionary = new HashMap<>();
+    MySQLCutie mysql = new MySQLCutie();
 
-    public String lookUpInDatabase(String word) {
-        //String query = "SELECT * FROM " + DatabaseConfig.DatabaseName +
-        return "";
-    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle recourses) {
@@ -44,45 +37,73 @@ public class Controller implements Initializable {
 
         btSearch.setOnMouseClicked(mouseEvent -> {
             String searchedWord = tfSearch.getText().trim();
-            if (searchedWord != null && searchedWord.equals("") == false) {
-                taMeaning.setText(dictionary.get(searchedWord));
+            if (!searchedWord.equals("")) {
+                taMeaning.setText(lookUpInDatabase(searchedWord));
             }
         });
 
         tfSearch.setOnKeyPressed(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 String searchedWord = tfSearch.getText().trim();
-                if (searchedWord != null && searchedWord.equals("") == false) {
-                    taMeaning.setText(dictionary.get(searchedWord));
+                if (!searchedWord.equals("")) {
+                    taMeaning.setText(lookUpInDatabase(searchedWord));
                 }
             }
+                eventUpdate(tfSearch.getText().trim());
+                System.out.println(tfSearch.getText().trim());
         });
 
         lvTarget.setOnMouseClicked(mouseEvent -> {
             String searchedWord = lvTarget.getSelectionModel().getSelectedItem();
-            if (searchedWord != null && searchedWord.equals("") == false) {
-                taMeaning.setText(dictionary.get(searchedWord));
+            if (searchedWord != null && !searchedWord.equals("")) {
+                taMeaning.setText(lookUpInDatabase(searchedWord));
             }
         });
     }
 
     public void initializeDictionary() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
-            Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/wjbu", "root", "root");
-            Statement state = conn.createStatement();
-            ResultSet rs = state.executeQuery("SELECT * FROM wjbu.dictev");
+            mysql.rs = mysql.state.executeQuery("SELECT * FROM wjbu.dictev;");
 
-            while(rs.next()) {
-                lvTarget.getItems().add(rs.getString("word"));
+            while(mysql.rs.next()) {
+                lvTarget.getItems().add(mysql.rs.getString("word"));
             }
 
-            conn.close();
-            state.close();
-            rs.close();
-        } catch (SQLException | ClassNotFoundException throwables) {
+        } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
+    }
 
+    public void eventUpdate (String word) {
+        try {
+            String query = "SELECT * FROM wjbu.dictev WHERE LOCATE('" + word + "',word) > 0;";
+            mysql.rs = mysql.state.executeQuery(query);
+            lvTarget.getItems().clear();
+            while(mysql.rs.next()) {
+                lvTarget.getItems().add(mysql.rs.getString("word"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public String lookUpInDatabase(String word) {
+        try {
+            String query = "SELECT * FROM wjbu.dictev WHERE LOCATE('" + word + "',word) > 0;";
+            mysql.rs = mysql.state.executeQuery(query);
+            if (mysql.rs.next())
+                try {
+                    return mysql.rs.getString("detail");
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
+                }
+            else
+            {
+                return "";
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return "";
     }
 }
