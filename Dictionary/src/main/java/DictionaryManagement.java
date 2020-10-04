@@ -9,28 +9,22 @@ import java.util.Scanner;
  * Manager the dictionary.
  */
 public class DictionaryManagement {
-    //ArrayList<Word> dictionary = new ArrayList<Word>();
-    public static int arraySize;
-    //public Dictionary word = new Dictionary(arraySize);
+    public Scanner input = new Scanner(System.in);
+    public static Word[] wordArray = new Word[100000];
 
     /**
      * insert function .
      */
     public void insertFromCommandline() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("How many Word you wanna translate? ");
+        System.out.println("\t\t\t\tHow many Word you wanna translate? ");
         System.out.print(">");
-
-        arraySize = input.nextInt();
-        Dictionary array = new Dictionary(arraySize);
-        input.nextLine();
-        for (int i = 0; i < DictionaryManagement.arraySize; i++) {
+        for (int i = 0; i < wordArray.length; i++) {
             Word creat = new Word();
-            System.out.println("The " + (i + 1) + " English " + "word ");
+            System.out.println("\t\t\t\tThe " + (i + 1) + " English " + "word ");
             creat.setWord_target(input.nextLine());
-            System.out.println("Explain meaning of the " + (i + 1) + " word ");
+            System.out.println("\t\t\t\tExplain meaning of the " + (i + 1) + " word ");
             creat.setWord_explain(input.nextLine());
-            Dictionary.wordArray[i] = new Word(creat.getWord_target(), creat.getWord_explain());
+            wordArray[i] = new Word(creat.getWord_target(), creat.getWord_explain());
         }
 
 
@@ -38,25 +32,22 @@ public class DictionaryManagement {
 
     public void insertFromFile() {
         try {
-
             File file = new File("src\\main\\java\\data.txt");
             if (!file.exists()) {
                 file.createNewFile();
             }
             Scanner read = new Scanner(file);
-            Dictionary arr = new Dictionary(100);
             int i = 0;
             while (read.hasNextLine()) {
                 String[] line = read.nextLine().split("\t");
                 if (Arrays.toString(line).compareTo("[]") != 0) {
-                    Dictionary.wordArray[i] = new Word(line[0], line[1]);
+                    wordArray[i] = new Word(line[0], line[1]);
                     ++i;
                 }
             }
         } catch (IOException bug) {
             System.out.println("Loi doc file" + bug);
         }
-
     }
 
     public void insertFromFileJson() {
@@ -82,15 +73,14 @@ public class DictionaryManagement {
     }
 
     public void dictionaryLookup() {
-        System.out.println("Search for >");
-        Scanner input = new Scanner(System.in);
+        System.out.print("\t\t\t\tSearch for >");
         String search = input.nextLine();
-        for (Word ans : Dictionary.wordArray) {
+        for (Word ans : wordArray) {
             if (ans.getWord_target().equals(search)) {
-                System.out.printf("Result: " + ans.getWord_explain());
+                System.out.printf("\t\t\t\tResult: " + ans.getWord_explain()+"\n");
                 break;
             } else {
-                System.out.println("There is no word like that! ");
+                System.out.println("\t\t\t\tThere is no word like that! ");
                 break;
             }
 
@@ -98,20 +88,61 @@ public class DictionaryManagement {
 
     }
 
-    public void dictionaryExportToFile() {
-
+    public void deleteWord() {
+        System.out.print("\t\t\t\tType word to delete here>");
+        String del = input.nextLine();
+        if (wordArray[0] == null) {
+            System.out.println("\t\t\t\tDictionary is empty");
+            return;
+        }
+        for (int i = 0; i < wordArray.length; i++) {
+            if (wordArray[i].getWord_target().equals(del)) {
+                wordArray[i] = null;
+                wordArray[wordArray.length]=null;
+                break;
+            }
+        }
         try {
 
-            FileOutputStream outFile = new FileOutputStream("data1.txt");
-            ObjectOutputStream writer = new ObjectOutputStream(outFile);
-
-            for (Word word : Dictionary.wordArray) {
-                writer.writeObject(word);
+            File file = new File("src\\main\\java\\data.txt");
+            FileWriter writer = new FileWriter(file);
+            if (!file.exists()) {
+                file.createNewFile();
             }
-            outFile.close();
+            String allwords = "";
+            for (Word words : wordArray) {
+                if (words != null) {
+                    allwords += words.getWord_target() + "\t" + words.getWord_explain() + "\n";
+                }
+
+            }
+            writer.write(allwords);
             writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (Exception ect) {
+            ect.printStackTrace();
+        }
+
+
+    }
+
+    public void dictionaryExportToFile() {
+        try {
+            File file = new File("src\\main\\java\\data1.txt");
+            FileWriter writer = new FileWriter(file);
+            if (!file.exists()) {
+                file.createNewFile();
+            }
+            String allwords = "";
+            for (Word words : wordArray) {
+                if (words != null) {
+                    allwords += words.getWord_target() + "\t" + words.getWord_explain() + "\n";
+                }
+            }
+            writer.write(allwords);
+            writer.close();
+            System.out.println("\t\t\t\tDictionary has been export to > " + file);
+        } catch (IOException exception) {
+            exception.printStackTrace();
         }
     }
 
