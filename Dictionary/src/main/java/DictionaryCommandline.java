@@ -24,8 +24,7 @@ public class DictionaryCommandline {
         for (Word word : DictionaryManagement.wordArray) {
             if (word != null) {
                 if (word.getWord_target().contains(find)) {
-
-                    System.out.println(word.getWord_target());
+                    System.out.println("\t\t\t\t\t"+word.getWord_target());
                 }
             } else break;
         }

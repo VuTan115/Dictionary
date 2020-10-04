@@ -45,12 +45,15 @@ public class DictionaryManagement {
         input.nextLine();
         for (int i = 0; i < num; i++) {
             Word creat = new Word();
-
             System.out.print("\t\t\t\tThe " + (i + 1) + " English " + "word >");
             creat.setWord_target(input.nextLine());
             System.out.print("\t\t\t\tExplain meaning of the " + (i + 1) + " word >");
             creat.setWord_explain(input.nextLine());
-            wordArray[getSize()] = new Word(creat.getWord_target(), creat.getWord_explain());
+            if(!creat.getWord_target().equals("") &&!creat.getWord_explain().equals("")) {
+                wordArray[getSize()] = new Word(creat.getWord_target(), creat.getWord_explain());
+            }else{
+                System.out.println("\t\t\t\t\t\tYour Word is illegal. Retype Pls!");
+            }
         }
         rewriteFile("src\\main\\java\\data.txt");
     }
