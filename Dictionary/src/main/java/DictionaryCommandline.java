@@ -5,11 +5,13 @@ public class DictionaryCommandline {
     DictionaryManagement pilot = new DictionaryManagement();
 
     public void showAllWords() {
-        System.out.println("\t\t\t\tNo\t|" + "English" + "\t\t|VietNamese ");
+        System.out.println("\t\t\t\tNo\t|" + "English" + "\t\t\t  | VietNamese ");
         int i = 0;
         for (Word word : DictionaryManagement.wordArray) {
             if (word != null) {
-                System.out.println("\t\t\t\t"+(i + 1) + "\t|" + word.getWord_target() + "\t\t|" + word.getWord_explain());
+                System.out.print("\t\t\t\t"+(i+1)+"\t| ");
+                System.out.printf("%-20s| ",  word.getWord_target());
+                System.out.print( word.getWord_explain()+"\n");
                 ++i;
             }
         }
@@ -54,7 +56,7 @@ public class DictionaryCommandline {
         System.out.print("\t\t\t\tChoose your option >");
         switch (input.nextInt()) {
             case 1:
-                System.out.println("\t\t\t\tAll word in your Dictionary\n");
+                System.out.println("\n\t\t\t\t\t\tAll word in your Dictionary\n");
                 showAllWords();
                 dictionaryAdvanced();
                 break;
@@ -75,7 +77,9 @@ public class DictionaryCommandline {
                 pilot.dictionaryExportToFile();
                 dictionaryAdvanced();
                 break;
-
+            case 6:
+                pilot.insertFromCommandline();
+                dictionaryAdvanced();
             case 7:
                 System.out.println("\t\t\t\tExited");
                 break;

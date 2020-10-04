@@ -1,3 +1,6 @@
+hello	xin chào
+pho	phở
+chicken	gà
 dog	con chó
 cat	con mèo
 class	lớp học
@@ -8,4 +11,5 @@ yasuo	đấng
 help	giúp đỡ
 get	lấy
 gay	gay
+don't	đừng
 don't	đừng
