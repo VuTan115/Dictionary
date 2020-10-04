@@ -78,9 +78,10 @@ public class DictionaryCommandline {
                 dictionaryAdvanced();
                 break;
             case 6:
-                pilot.insertFromCommandline();
+                pilot.addWord();
                 dictionaryAdvanced();
-            case 7:
+
+            case 8:
                 System.out.println("\t\t\t\tExited");
                 break;
 

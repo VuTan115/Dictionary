@@ -27,6 +27,19 @@ public class DictionaryManagement {
      * insert function .
      */
     public void insertFromCommandline() {
+        Scanner input = new Scanner(System.in);
+        System.out.print("How many Word you wanna translate? >");
+        int num=input.nextInt();
+        for (int i = 0; i <num; i++) {
+            Word creat = new Word();
+            System.out.println("The " + (i + 1) + " English " + "word ");
+            creat.setWord_target(input.nextLine());
+            System.out.println("Explain meaning of the " + (i + 1) + " word ");
+            creat.setWord_explain(input.nextLine());
+            Dictionary.wordArray[i] = new Word(creat.getWord_target(), creat.getWord_explain());
+        }
+    }
+        public void addWord() {
         System.out.print("\t\t\t\tHow many Word you wanna add? >");
         int num=input.nextInt();
         input.nextLine();
