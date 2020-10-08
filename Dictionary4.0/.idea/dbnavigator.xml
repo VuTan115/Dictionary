@@ -26,15 +26,16 @@
     <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
-    <connection id="877f9ad8-ba03-45b6-acb2-17a9e2adf976">
-      <console name="Connection" type="STANDARD" schema="mysql" session="Main" />
+    <connection id="9f40ae3a-e443-4f8a-8eaa-771d63db0a4f">
+      <console name="myConn" type="STANDARD" schema="dictionary" session="Main"><![CDATA[SELECT * FROM dictionary.tbl_edict
+ORDER BY word]]></console>
     </connection>
   </component>
   <component name="DBNavigator.Project.DatabaseFileManager">
     <open-files />
   </component>
   <component name="DBNavigator.Project.DatabaseSessionManager">
-    <connection id="877f9ad8-ba03-45b6-acb2-17a9e2adf976" />
+    <connection id="9f40ae3a-e443-4f8a-8eaa-771d63db0a4f" />
   </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
@@ -55,13 +56,15 @@
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
+    <recently-used-interfaces>
+      <mapping database-type="MYSQL" interface-id="DEFAULT" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
-      <connection id="877f9ad8-ba03-45b6-acb2-17a9e2adf976" active="true">
+      <connection id="9f40ae3a-e443-4f8a-8eaa-771d63db0a4f" active="true">
         <database>
-          <name value="Connection" />
+          <name value="myConn" />
           <description value="" />
           <database-type value="MYSQL" />
           <config-type value="BASIC" />
@@ -75,7 +78,7 @@
           <database value="mysql" />
           <type value="USER_PASSWORD" />
           <user value="root" />
-          <deprecated-pwd value="cm9vdA==" />
+          <deprecated-pwd value="dnVjYW90YW4yMDAxNDc=" />
         </database>
         <properties>
           <auto-commit value="false" />

@@ -12,9 +12,9 @@
 
 <AnchorPane maxHeight="556.0" maxWidth="749.0" minHeight="540.0" minWidth="735.0" opacity="0.98" prefHeight="556.0" prefWidth="749.0" style="-fx-background-color: #1dd1a1; -fx-border-color: #ffffcc; -fx-background-radius: 10px; -fx-border-radius: 10px;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.Controller">
     <children>
-        <AnchorPane layoutX="8.0" layoutY="4.0" prefHeight="532.0" prefWidth="304.0" style="-fx-background-color: #48dbfb; -fx-border-radius: 10px; -fx-background-radius: 10px;" AnchorPane.topAnchor="7.0">
+        <AnchorPane layoutX="8.0" layoutY="4.0" prefHeight="532.0" prefWidth="304.0" style="-fx-background-color: #48dbfb; -fx-border-radius: 10px; -fx-background-radius: 10px;" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="7.0">
             <children>
-                <ListView fx:id="lvWords" prefHeight="464.0" prefWidth="228.0" style="-fx-background-color: #c8d6e5; -fx-background-radius: 10px; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="72.0" />
+                <ListView fx:id="lvWords" prefHeight="464.0" prefWidth="228.0" style="-fx-background-color: #c8d6e5; -fx-background-radius: 10px; -fx-border-radius: 10px;" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="72.0" />
                 <TextField fx:id="tfSearchedWord" layoutY="34.0" prefHeight="34.0" prefWidth="228.0" promptText="Type to search" style="-fx-border-radius: 10px;" AnchorPane.leftAnchor="5.0" AnchorPane.rightAnchor="80.0">
                     <font>
                         <Font name="Segoe UI" size="16.0" />
@@ -35,7 +35,7 @@
                 <Cursor fx:constant="HAND" />
             </cursor>
          <children>
-            <TextArea fx:id="taMeaning" layoutX="50.0" layoutY="95.0" prefHeight="266.0" prefWidth="255.0" />
+            <TextArea fx:id="taMeaning" layoutX="6.0" layoutY="70.0" prefHeight="446.0" prefWidth="374.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="70.0" />
          </children>
         </AnchorPane>
     </children>
