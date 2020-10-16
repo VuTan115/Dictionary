@@ -1,10 +1,11 @@
-package sample;
+package MainPackage;
 
+import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import jdk.jfr.Event;
+import javafx.scene.web.WebView;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,6 +13,7 @@ import java.util.ResourceBundle;
 import java.sql.*;
 
 public class Controller implements Initializable {
+
 
     @FXML
     public Button btSearch = new Button();
@@ -23,7 +25,7 @@ public class Controller implements Initializable {
     public ListView<String> lvTarget = new ListView<>();
 
     @FXML
-    public TextArea taMeaning = new TextArea();
+    public WebView wvMeaning = new WebView();
 
     @FXML
     ToggleGroup tgLanguage = new ToggleGroup();
@@ -34,27 +36,38 @@ public class Controller implements Initializable {
     @FXML
     RadioMenuItem rmiViToEn = new RadioMenuItem();
 
-    MySQLCutie mysql = new MySQLCutie();
+    @FXML
+    MenuItem miAdd = new MenuItem();
 
-    String tb = mysql.tbnameAV;
+    @FXML
+    MenuItem miDelete = new MenuItem();
 
-    /**Taskbar tkb = new Taskbar(); */
+    private MySQLCutie mysql = new MySQLCutie();
+
+    private String tb = mysql.tbnameAV;
+
 
 
     @Override
     public void initialize(URL location, ResourceBundle recourses) {
         initializeFXML();
         initializeDictionary();
+        eventHandler();
     }
 
     /** First load all the database. */
     public void initializeDictionary() {
+        int i = 0;
         try {
             lvTarget.getItems().clear();
-            mysql.rs = mysql.state.executeQuery("SELECT * FROM " + tb + ";");
-            while(mysql.rs.next()) {
+            mysql.rs = mysql.state.executeQuery("SELECT " + mysql.colmWord
+                    + " FROM " + tb
+                    + " ORDER BY " + mysql.colmWord + ";");
+            while(mysql.rs.next() && i++ < 15000) {
                 lvTarget.getItems().add(mysql.rs.getString(mysql.colmWord));
+                for (int j = 0; j < 6; j++) mysql.rs.next();
             }
+            lvTarget.getItems().add("...");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -87,7 +100,7 @@ public class Controller implements Initializable {
 
             String searchedWord = tfSearch.getText().trim();
             if (!searchedWord.equals("")) {
-                taMeaning.setText(lookUpInDatabase(searchedWord));
+                LoadHtmlContent(lookUpInDatabase(searchedWord));
             }
         });
 
@@ -96,7 +109,7 @@ public class Controller implements Initializable {
             if (keyEvent.getCode() == KeyCode.ENTER) {
                 String searchedWord = tfSearch.getText().trim();
                 if (!searchedWord.equals("")) {
-                    taMeaning.setText(lookUpInDatabase(searchedWord));
+                    LoadHtmlContent(lookUpInDatabase(searchedWord));
                 }
             }
 
@@ -113,7 +126,7 @@ public class Controller implements Initializable {
         lvTarget.setOnMouseClicked(mouseEvent -> {
             String searchedWord = lvTarget.getSelectionModel().getSelectedItem();
             if (searchedWord != null && !searchedWord.equals("")) {
-                taMeaning.setText(lookUpInDatabase(searchedWord));
+                LoadHtmlContent(lookUpInDatabase(searchedWord));
             }
         });
     }
@@ -137,12 +150,16 @@ public class Controller implements Initializable {
 
     /** Find out the word in database. */
     public String lookUpInDatabase(String word) {
+        if (word.charAt(0) == '\'') {
+            String tmp = "\\" + word;
+            word = tmp;
+        }
         try {
             String query = "SELECT * FROM " + tb + " WHERE " + mysql.colmWord + " LIKE ('" + word + "%');";
             mysql.rs = mysql.state.executeQuery(query);
             if (mysql.rs.next())
                 try {
-                    return mysql.rs.getString(mysql.colmDesc);
+                    return mysql.rs.getString(mysql.colmHTML);
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
@@ -154,6 +171,20 @@ public class Controller implements Initializable {
             e.printStackTrace();
         }
         return "";
+    }
+
+    void LoadHtmlContent(String word) {
+        wvMeaning.getEngine().loadContent(word);
+    }
+
+    /** Add new word. */
+    public void addWord() {
+
+    }
+
+    /** Delete word. */
+    public void deleteWord() {
+
     }
 
 }

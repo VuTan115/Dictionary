@@ -1,8 +1,6 @@
-package sample;
+package MainPackage;
 
 import java.sql.*;
-import java.util.HashMap;
-import java.util.Map;
 
 public class MySQLCutie {
     String url, user, password, dbname, tbnameVA, tbnameAV;

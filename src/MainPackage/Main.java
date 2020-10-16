@@ -1,4 +1,4 @@
-package sample;
+package MainPackage;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -10,9 +10,9 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("MainStage.fxml"));
         primaryStage.setTitle("Dictionary");
-        primaryStage.setScene(new Scene(root,800, 700));
+        primaryStage.setScene(new Scene(root,600, 400));
         primaryStage.show();
     }
 
