@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.web.HTMLEditor?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFE4B5;"
+            xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="Edit.Controller">
+   <Button fx:id="btSave" layoutX="448.0" layoutY="355.0" mnemonicParsing="false" onAction="#btSaveHandle"
+           onMouseClicked="#btSaveHandle" text="Save" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="110.0">
+      <graphic>
+         <FontAwesomeIconView glyphName="SAVE" size="20"/>
+      </graphic>
+   </Button>
+   <Button fx:id="btCancel" layoutX="525.0" layoutY="355.0" mnemonicParsing="false" onMouseClicked="#btCancelHandle"
+           text="Cancel" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="15.0">
+      <graphic>
+         <FontAwesomeIconView glyphName="REMOVE" size="20"/>
+      </graphic>
+   </Button>
+   <CheckBox fx:id="cbAV" layoutX="34.0" layoutY="364.0" mnemonicParsing="false" onMouseClicked="#checkCheckBoxLanguage"
+             text="English - Vietnamese" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="15.0"/>
+   <CheckBox fx:id="cbVA" layoutX="200.0" layoutY="364.0" mnemonicParsing="false"
+             onMouseClicked="#checkCheckBoxLanguage" text="Vietnamese - English" AnchorPane.bottomAnchor="20.0"
+             AnchorPane.leftAnchor="200.0"/>
+   <TextField fx:id="tfWord" layoutX="87.0" layoutY="27.0" prefHeight="31.0" prefWidth="448.0" promptText="Word"
+              AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="20.0"/>
+   <Label layoutX="34.0" layoutY="25.0" text="Word:" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="25.0"/>
+   <HTMLEditor fx:id="htmlE"
+               htmlText="&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body contenteditable=&quot;true&quot;&gt;&lt;/body&gt;&lt;/html&gt;"
+               layoutX="47.0" layoutY="64.0" prefHeight="284.0" prefWidth="506.0" AnchorPane.bottomAnchor="65.0"
+               AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="65.0"/>
+</AnchorPane>

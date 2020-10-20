@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import de.jensd.fx.glyphs.fontawesome.FontAwesomeIconView?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.RadioMenuItem?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.web.WebView?>
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainPackage.Controller">
+    <center>
+        <AnchorPane prefHeight="400.0" prefWidth="437.0" style="-fx-background-color: #8FBC8F;">
+            <WebView fx:id="wvMeaning" opacity="0.3" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+            <Button fx:id="btBack" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseReleased="#thePreviousWords" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
+                <graphic>
+                    <FontAwesomeIconView glyphName="ARROW_LEFT" onMouseClicked="#eventHandler" size="20" textAlignment="CENTER" />
+                </graphic>
+            </Button>
+            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="29.0" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
+                <graphic>
+                    <FontAwesomeIconView fill="#d07a10" glyphName="VOLUME_DOWN" size="20" textAlignment="CENTER" wrappingWidth="18.0" />
+                </graphic>
+            </Button>
+            <Button fx:id="btAPI" layoutX="375.0" layoutY="14.0" mnemonicParsing="false" textAlignment="CENTER" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+                <graphic>
+                    <FontAwesomeIconView fill="#1e1279" glyphName="GLOBE" size="20" />
+                </graphic>
+            </Button>
+        </AnchorPane>
+    </center>
+    <top>
+        <MenuBar prefHeight="32.0" prefWidth="609.0" BorderPane.alignment="CENTER">
+            <Menu mnemonicParsing="false" text="Dictionary" visible="false">
+                <graphic>
+                    <FontAwesomeIconView glyphName="BOOK" size="20" />
+                </graphic>
+            </Menu>
+            <Menu mnemonicParsing="false" text="File">
+                <MenuItem fx:id="miClose" mnemonicParsing="false" onAction="#tsukareta" text="Close" />
+            </Menu>
+            <Menu fx:id="mEdit" mnemonicParsing="false" text="Edit">
+                <MenuItem fx:id="miAdd" mnemonicParsing="false" onAction="#addWord" text="Add word" />
+                <MenuItem fx:id="miEdit" mnemonicParsing="false" onAction="#editWord" text="Edit word" />
+                <MenuItem fx:id="miDelete" mnemonicParsing="false" onAction="#deleteWord" text="Delete word" />
+            </Menu>
+            <Menu fx:id="mSettings" mnemonicParsing="false" text="Settings">
+                <Menu mnemonicParsing="false" text="Language">
+                    <RadioMenuItem fx:id="rmiEnToVi" mnemonicParsing="false" onAction="#checkLanguage" text="English to Vietnames">
+                        <toggleGroup>
+                            <ToggleGroup fx:id="tgLanguage" />
+                        </toggleGroup>
+                    </RadioMenuItem>
+                    <RadioMenuItem fx:id="rmiViToEn" mnemonicParsing="false" onAction="#checkLanguage" text="Vietnames to English" toggleGroup="$tgLanguage" />
+                </Menu>
+                <MenuItem mnemonicParsing="false" text="Theme" />
+            </Menu>
+            <Menu fx:id="mHelp" mnemonicParsing="false" text="Help">
+                <MenuItem mnemonicParsing="false" text="About" />
+            </Menu>
+        </MenuBar>
+    </top>
+    <left>
+        <AnchorPane prefHeight="400.0" prefWidth="242.0" style="-fx-background-color: LightSeaGreen;" BorderPane.alignment="CENTER">
+            <Button fx:id="btSearch" layoutX="167.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseClicked="#eventHandler" text="Search" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0" />
+            <TextField fx:id="tfSearch" layoutX="10.0" layoutY="14.0" onAction="#eventHandler" onKeyReleased="#eventHandler" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
+            <ListView fx:id="lvTarget" layoutX="14.0" layoutY="55.0" onEditStart="#eventHandler" onMouseClicked="#eventHandler" opacity="0.3" prefHeight="200.0" prefWidth="201.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+        </AnchorPane>
+    </left>
+</BorderPane>
