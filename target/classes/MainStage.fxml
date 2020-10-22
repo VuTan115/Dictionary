@@ -16,18 +16,18 @@
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MainPackage.Controller">
     <center>
         <AnchorPane prefHeight="400.0" prefWidth="437.0" style="-fx-background-color: #8FBC8F;">
-            <WebView fx:id="wvMeaning" opacity="0.3" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+            <WebView fx:id="wvMeaning" opacity="0.78" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
             <Button fx:id="btBack" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseReleased="#thePreviousWords" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
                 <graphic>
                     <FontAwesomeIconView glyphName="ARROW_LEFT" onMouseClicked="#eventHandler" size="20" textAlignment="CENTER" />
                 </graphic>
             </Button>
-            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="29.0" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#btSpeakHandle" prefHeight="31.0" prefWidth="29.0" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
                 <graphic>
                     <FontAwesomeIconView fill="#d07a10" glyphName="VOLUME_DOWN" size="20" textAlignment="CENTER" wrappingWidth="18.0" />
                 </graphic>
             </Button>
-            <Button fx:id="btAPI" layoutX="375.0" layoutY="14.0" mnemonicParsing="false" textAlignment="CENTER" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="btAPI" layoutX="375.0" layoutY="14.0" mnemonicParsing="false" onAction="#btAPIHandler" onMouseClicked="#btAPIHandler" textAlignment="CENTER" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
                 <graphic>
                     <FontAwesomeIconView fill="#1e1279" glyphName="GLOBE" size="20" />
                 </graphic>
@@ -58,7 +58,6 @@
                     </RadioMenuItem>
                     <RadioMenuItem fx:id="rmiViToEn" mnemonicParsing="false" onAction="#checkLanguage" text="Vietnames to English" toggleGroup="$tgLanguage" />
                 </Menu>
-                <MenuItem mnemonicParsing="false" text="Theme" />
             </Menu>
             <Menu fx:id="mHelp" mnemonicParsing="false" text="Help">
                 <MenuItem mnemonicParsing="false" text="About" />
@@ -69,7 +68,7 @@
         <AnchorPane prefHeight="400.0" prefWidth="242.0" style="-fx-background-color: LightSeaGreen;" BorderPane.alignment="CENTER">
             <Button fx:id="btSearch" layoutX="167.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseClicked="#eventHandler" text="Search" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0" />
             <TextField fx:id="tfSearch" layoutX="10.0" layoutY="14.0" onAction="#eventHandler" onKeyReleased="#eventHandler" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
-            <ListView fx:id="lvTarget" layoutX="14.0" layoutY="55.0" onEditStart="#eventHandler" onMouseClicked="#eventHandler" opacity="0.3" prefHeight="200.0" prefWidth="201.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
+            <ListView fx:id="lvTarget" layoutX="14.0" layoutY="55.0" onEditStart="#eventHandler" onMouseClicked="#eventHandler" opacity="0.78" prefHeight="200.0" prefWidth="201.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="55.0" />
         </AnchorPane>
     </left>
 </BorderPane>

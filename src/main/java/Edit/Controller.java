@@ -41,10 +41,10 @@ public class Controller implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         if (MySQLCutie.currentWord.equals("")) {
-            htmlE.setHtmlText("<html dir=\"ltr\"><head></head><body "
-                    + "contenteditable=\"true\"><p><font face=\"Segoe UI\" size=\"4\">"
-                    + "<b>&lt;Word&gt;</b></font></p><p><font face=\"Segoe UI\" size=\"4\">"
-                    + "<b>&lt;Description&gt;</b></font></p><br></body></html>\n");
+            htmlE.setHtmlText("<html dir=\"ltr\"><head>"
+                    + "</head><body contenteditable=\"true\"><p>"
+                    + "<font face=\"Arial\" size=\"4\">"
+                    + "<b>&lt;Replace this&gt;</b></font></p></body></html>");
             cbAV.setSelected(true);
             chosenTb = MySQLCutie.tbnameAV;
         } else {
@@ -62,6 +62,8 @@ public class Controller implements Initializable {
                 cbVA.setSelected(true);
                 cbAV.setSelected(false);
             }
+            cbAV.setDisable(true);
+            cbVA.setDisable(true);
         }
         checkCheckBoxLanguage();
 
@@ -71,12 +73,22 @@ public class Controller implements Initializable {
     @FXML
     void checkCheckBoxLanguage() {
         cbVA.setOnMouseClicked(mouseEvent -> {
-            cbAV.setSelected(false);
-            chosenTb = MySQLCutie.tbnameVA;
+            if (cbVA.isSelected()) {
+                cbAV.setSelected(false);
+                chosenTb = MySQLCutie.tbnameVA;
+            } else {
+               cbAV.setSelected(true);
+               chosenTb = MySQLCutie.tbnameAV;
+            }
         });
         cbAV.setOnMouseClicked(mouseEvent -> {
-            cbVA.setSelected(false);
-            chosenTb = MySQLCutie.tbnameAV;
+            if (cbAV.isSelected()) {
+                cbVA.setSelected(false);
+                chosenTb = MySQLCutie.tbnameAV;
+            } else {
+                cbVA.setSelected(true);
+                chosenTb = MySQLCutie.tbnameVA;
+            }
         });
     }
 

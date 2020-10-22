@@ -1,6 +1,9 @@
 package MainPackage;
 
 import DatabaseConn.MySQLCutie;
+
+import com.gtranslate.Audio;
+import com.gtranslate.Language;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -10,11 +13,13 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javazoom.jl.decoder.JavaLayerException;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +36,12 @@ public class Controller implements Initializable {
 
     @FXML
     public Button btBack = new Button();
+
+    @FXML
+    public Button btAPI = new Button();
+
+    @FXML
+    public Button btSpeaker;
 
     @FXML
     public TextField tfSearch = new TextField();
@@ -129,6 +140,10 @@ public class Controller implements Initializable {
 
         /* Recall the previous words. */
         thePreviousWords();
+
+        btSpeakHandle();
+
+        btAPIHandler();
     }
 
     /** Minimize the word list. */
@@ -315,23 +330,67 @@ public class Controller implements Initializable {
 
     /** Delete word. */
     public void deleteWord() {
-        if (!MySQLCutie.currentWord.isEmpty())
         miDelete.setOnAction(mouseEvent -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Deleting confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("If deleted, the data will be lost. Are you sure?");
-            Optional<ButtonType> action = alert.showAndWait();
-            if(action.isPresent() && action.get() == ButtonType.OK) {
-                String query = "DELETE FROM " + MySQLCutie.currenttb + " WHERE (`id` = '" + MySQLCutie.currentId + "');";
-                try {
-                    MySQLCutie.state.executeUpdate(query);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+            if (!MySQLCutie.currentWord.equals("")) {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Deleting confirmation");
+                alert.setHeaderText(null);
+                alert.setContentText("If deleted, the data will be lost. Are you sure?");
+                Optional<ButtonType> action = alert.showAndWait();
+                if (action.isPresent() && action.get() == ButtonType.OK) {
+                    String query = "DELETE FROM " + MySQLCutie.currenttb + " WHERE (`id` = '" + MySQLCutie.currentId + "');";
+                    try {
+                        MySQLCutie.state.executeUpdate(query);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 }
             }
         });
     }
+
+    public void btAPIHandler() {
+        btAPI.setOnMouseClicked(mouseEvent -> {
+            Parent rootEdit = null;
+            try {
+                rootEdit = FXMLLoader.load(getClass().getResource("/API.fxml"));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("API Window");
+            stage.setScene(new Scene(rootEdit, 600, 500));
+            stage.show();
+        });
+    }
+
+    /**
+     * button speak
+     */
+    public void btSpeakHandle() {
+        btSpeaker.setOnMouseClicked(mouseEvent -> {
+            String searchedWord = MySQLCutie.currentWord;
+            if (!searchedWord.equals("")) {
+                try {
+
+                    if (MySQLCutie.currenttb.equals(MySQLCutie.tbnameAV)) {
+                        Audio audio = Audio.getInstance();
+                        InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.ENGLISH);
+                        audio.play(sound);
+                    } else {
+                        Audio audio = Audio.getInstance();
+                        InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.VIETNAMESE);
+                        audio.play(sound);
+                    }
+                } catch (IOException | JavaLayerException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+    }
+
 
     /** Closing. */
     public void tsukareta() {
