@@ -1,6 +1,6 @@
-package Edit;
+package main.java.Edit;
 
-import DatabaseConn.MySQLCutie;
+import main.java.DatabaseConn.MySQLCutie;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -142,14 +142,6 @@ public class Controller implements Initializable {
                                 + " int UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST;";
                         try {
                             MySQLCutie.state.executeUpdate(query);
-                            /* MySQLCutie.state.executeUpdate(query1);
-                            System.out.println(1);
-                            MySQLCutie.state.executeLargeUpdate(query2);
-                            System.out.println(2);
-                            MySQLCutie.state.executeUpdate(query3);
-                            System.out.println(3);
-                            MySQLCutie.state.executeUpdate(query4);
-                            System.out.println(4);*/
                         } catch (SQLException throwables) {
                             throwables.printStackTrace();
                         }

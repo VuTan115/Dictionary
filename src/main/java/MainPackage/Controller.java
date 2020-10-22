@@ -1,6 +1,12 @@
-package MainPackage;
+package main.java.MainPackage;
 
-import DatabaseConn.MySQLCutie;
+
+import com.gtranslate.Audio;
+import com.gtranslate.Language;
+import com.sun.speech.freetts.Voice;
+import com.sun.speech.freetts.VoiceManager;
+import javazoom.jl.decoder.JavaLayerException;
+import main.java.DatabaseConn.MySQLCutie;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -15,6 +21,8 @@ import javafx.scene.web.WebView;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +36,9 @@ public class Controller implements Initializable {
 
     @FXML
     public Button btSearch = new Button();
+
+    @FXML
+    private Button btSpeaker;
 
     @FXML
     public Button btBack = new Button();
@@ -73,14 +84,16 @@ public class Controller implements Initializable {
         eventHandler();
     }
 
-    /** First load all the database. */
+    /**
+     * First load all the database.
+     */
     public void initializeDictionary() {
         int i = 0;
         try {
             lvTarget.getItems().clear();
             MySQLCutie.rs = MySQLCutie.state.executeQuery("SELECT " + MySQLCutie.colmWord
                     + " FROM " + MySQLCutie.currenttb + ";");
-            while(MySQLCutie.rs.next() && i++ < 15000) {
+            while (MySQLCutie.rs.next() && i++ < 15000) {
                 lvTarget.getItems().add(MySQLCutie.rs.getString(MySQLCutie.colmWord));
                 for (int j = 0; j < 6; j++) MySQLCutie.rs.next();
             }
@@ -90,7 +103,9 @@ public class Controller implements Initializable {
         }
     }
 
-    /** FXML initialize. */
+    /**
+     * FXML initialize.
+     */
     public void initializeFXML() {
         rmiEnToVi.setToggleGroup(tgLanguage);
         rmiViToEn.setToggleGroup(tgLanguage);
@@ -103,7 +118,9 @@ public class Controller implements Initializable {
         deleteWord();
     }
 
-    /** Check language. */
+    /**
+     * Check language.
+     */
     public void checkLanguage() {
         if (rmiEnToVi.isSelected() && MySQLCutie.currenttb.equals(MySQLCutie.tbnameVA)) {
             MySQLCutie.currenttb = MySQLCutie.tbnameAV;
@@ -115,7 +132,9 @@ public class Controller implements Initializable {
         }
     }
 
-    /** Handle event. */
+    /**
+     * Handle event.
+     */
     public void eventHandler() {
 
         /* Click button Search. */
@@ -129,16 +148,20 @@ public class Controller implements Initializable {
 
         /* Recall the previous words. */
         thePreviousWords();
+        /*Click button speak*/
+        btSpeakHandle();
     }
 
-    /** Minimize the word list. */
-    public void eventUpdate (String word) {
+    /**
+     * Minimize the word list.
+     */
+    public void eventUpdate(String word) {
         try {
             String query = "SELECT * FROM " + MySQLCutie.currenttb + " WHERE " + MySQLCutie.colmWord + " LIKE CONCAT(CONVERT('" + word + "', BINARY), '%');";
             MySQLCutie.rs = MySQLCutie.state.executeQuery(query);
             lvTarget.getItems().clear();
             int tmp = 0;
-            while(MySQLCutie.rs.next() && tmp < 10) {
+            while (MySQLCutie.rs.next() && tmp < 10) {
                 lvTarget.getItems().add(MySQLCutie.rs.getString(MySQLCutie.colmWord));
                 tmp++;
             }
@@ -148,7 +171,9 @@ public class Controller implements Initializable {
         }
     }
 
-    /** Find out the word in database. */
+    /**
+     * Find out the word in database.
+     */
     public String lookUpInDatabase(String word) {
         if (word.charAt(0) == '\'') {
             word = "\\" + word;
@@ -167,8 +192,7 @@ public class Controller implements Initializable {
                     if (previousWords.isEmpty()) {
                         previousWords.add(word);
                         MySQLCutie.tbList.add(MySQLCutie.currenttb);
-                    }
-                    else if (!previousWords.get(previousWords.size() - 1).equals(word)) {
+                    } else if (!previousWords.get(previousWords.size() - 1).equals(word)) {
                         previousWords.add(word);
                         MySQLCutie.tbList.add(MySQLCutie.currenttb);
                     }
@@ -182,8 +206,7 @@ public class Controller implements Initializable {
                 } catch (SQLException throwables) {
                     throwables.printStackTrace();
                 }
-            else
-            {
+            else {
                 return "";
             }
         } catch (SQLException e) {
@@ -192,12 +215,16 @@ public class Controller implements Initializable {
         return "";
     }
 
-    /** Load html meaning of the word. */
+    /**
+     * Load html meaning of the word.
+     */
     void LoadHtmlContent(String word) {
         wvMeaning.getEngine().loadContent(word);
     }
 
-    /** Click button Search. */
+    /**
+     * Click button Search.
+     */
     void btSearchHandle() {
         btSearch.setOnMouseClicked(mouseEvent -> {
             String searchedWord = tfSearch.getText().trim();
@@ -207,7 +234,28 @@ public class Controller implements Initializable {
         });
     }
 
-    /** Keyboard input. */
+    /**
+     * button speak/
+     */
+    void btSpeakHandle() {
+        btSpeaker.setOnMouseClicked(mouseEvent -> {
+            String searchedWord = tfSearch.getText().trim();
+            if (!searchedWord.equals("")) {
+                try {
+                    Audio audio = Audio.getInstance();
+                    InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.ENGLISH);
+                    audio.play(sound);
+                } catch (IOException | JavaLayerException e) {
+                    System.out.println(e.getMessage());
+                }
+            }
+        });
+
+    }
+
+    /**
+     * Keyboard input.
+     */
     public void keyboardInputHandle() {
         tfSearch.setOnKeyReleased(keyEvent -> {
             if (keyEvent.getCode() == KeyCode.ENTER) {
@@ -219,15 +267,16 @@ public class Controller implements Initializable {
 
             if (!tfSearch.getText().trim().equals("")) {
                 eventUpdate(tfSearch.getText().trim());
-            }
-            else {
+            } else {
                 lvTarget.getItems().clear();
                 initializeDictionary();
             }
         });
     }
 
-    /** Assign the word. */
+    /**
+     * Assign the word.
+     */
     public void clickedHandle() {
         lvTarget.setOnMouseClicked(mouseEvent -> {
             String searchedWord = lvTarget.getSelectionModel().getSelectedItem();
@@ -237,8 +286,10 @@ public class Controller implements Initializable {
         });
     }
 
-    /** Recall the previous words. */
-    public void thePreviousWords () {
+    /**
+     * Recall the previous words.
+     */
+    public void thePreviousWords() {
         btBack.setOnMouseReleased(mouseEvent -> {
             String searchedWord = previousWords.get(previousWords.size() - 2);
 
@@ -258,7 +309,9 @@ public class Controller implements Initializable {
         });
     }
 
-    /** Add word. */
+    /**
+     * Add word.
+     */
     public void addWord() {
         miAdd.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
@@ -278,7 +331,9 @@ public class Controller implements Initializable {
         });
     }
 
-    /** Edit word. */
+    /**
+     * Edit word.
+     */
     public void editWord() {
         miEdit.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
@@ -296,8 +351,7 @@ public class Controller implements Initializable {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
-                    }
-                    else {
+                    } else {
                         Parent rootEdit = FXMLLoader.load(getClass().getResource("/Edit.fxml"));
                         Stage stage = new Stage();
                         stage.initModality(Modality.APPLICATION_MODAL);
@@ -313,27 +367,31 @@ public class Controller implements Initializable {
         });
     }
 
-    /** Delete word. */
+    /**
+     * Delete word.
+     */
     public void deleteWord() {
         if (!MySQLCutie.currentWord.isEmpty())
-        miDelete.setOnAction(mouseEvent -> {
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Deleting confirmation");
-            alert.setHeaderText(null);
-            alert.setContentText("If deleted, the data will be lost. Are you sure?");
-            Optional<ButtonType> action = alert.showAndWait();
-            if(action.isPresent() && action.get() == ButtonType.OK) {
-                String query = "DELETE FROM " + MySQLCutie.currenttb + " WHERE (`id` = '" + MySQLCutie.currentId + "');";
-                try {
-                    MySQLCutie.state.executeUpdate(query);
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+            miDelete.setOnAction(mouseEvent -> {
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Deleting confirmation");
+                alert.setHeaderText(null);
+                alert.setContentText("If deleted, the data will be lost. Are you sure?");
+                Optional<ButtonType> action = alert.showAndWait();
+                if (action.isPresent() && action.get() == ButtonType.OK) {
+                    String query = "DELETE FROM " + MySQLCutie.currenttb + " WHERE (`id` = '" + MySQLCutie.currentId + "');";
+                    try {
+                        MySQLCutie.state.executeUpdate(query);
+                    } catch (SQLException throwables) {
+                        throwables.printStackTrace();
+                    }
                 }
-            }
-        });
+            });
     }
 
-    /** Closing. */
+    /**
+     * Closing.
+     */
     public void tsukareta() {
         miClose.setOnAction(mouseEvent -> {
             Stage stage = (Stage) btSearch.getScene().getWindow();
