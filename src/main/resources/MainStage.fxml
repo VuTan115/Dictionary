@@ -13,22 +13,22 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="anchor" prefHeight="598.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.MainPackage.Controller">
+<BorderPane fx:id="anchor" prefHeight="598.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.MainPackage.Controller">
     <center>
         <AnchorPane prefHeight="568.0" prefWidth="390.0" style="-fx-background-color: #8FBC8F;">
             <WebView fx:id="wvMeaning" layoutX="22.0" layoutY="63.0" prefHeight="495.0" prefWidth="502.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="63.0" />
-            <Button fx:id="btBack" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseReleased="#thePreviousWords" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="btBack" layoutX="58.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseReleased="#thePreviousWords" prefHeight="26.0" prefWidth="65.0" textAlignment="CENTER" AnchorPane.leftAnchor="58.0" AnchorPane.topAnchor="14.0">
 
             </Button>
-            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="56.0" text="speak" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="speak" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
             </Button>
-            <Button fx:id="btAPI" layoutX="375.0" layoutY="14.0" mnemonicParsing="false" textAlignment="CENTER" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="btAPI" layoutX="292.0" layoutY="14.0" mnemonicParsing="false" textAlignment="CENTER" AnchorPane.rightAnchor="211.20000000000005" AnchorPane.topAnchor="14.0">
 
             </Button>
         </AnchorPane>
     </center>
     <top>
-        <MenuBar prefHeight="30.0" prefWidth="822.0" BorderPane.alignment="CENTER">
+        <MenuBar prefHeight="0.0" prefWidth="803.0" BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Dictionary" visible="false">
 
             </Menu>
@@ -57,12 +57,12 @@
         </MenuBar>
     </top>
     <left>
-        <AnchorPane prefHeight="568.0" prefWidth="288.0" style="-fx-background-color: #0e918c;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="573.0" prefWidth="350.0" style="-fx-background-color: #0e918c;" BorderPane.alignment="CENTER">
             <Button fx:id="btSearch" layoutX="167.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseClicked="#eventHandler" text="Search" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
             <cursor>
                <Cursor fx:constant="HAND" />
             </cursor></Button>
-            <TextField fx:id="tfSearch" layoutX="10.0" layoutY="14.0" onAction="#eventHandler" onKeyReleased="#eventHandler" prefHeight="31.0" prefWidth="153.0" promptText="Search" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
+            <TextField fx:id="tfSearch" layoutX="10.0" layoutY="14.0" onAction="#eventHandler" onKeyReleased="#eventHandler" prefHeight="31.0" prefWidth="257.0" promptText="Search" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0" />
             <ListView fx:id="lvTarget" layoutX="14.0" layoutY="55.0" onEditStart="#eventHandler" onMouseClicked="#eventHandler" opacity="0.3" prefHeight="496.0" prefWidth="202.0" AnchorPane.bottomAnchor="17.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="55.0" />
         </AnchorPane>
     </left>

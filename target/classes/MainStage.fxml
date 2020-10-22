@@ -13,14 +13,14 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.web.WebView?>
 
-<BorderPane fx:id="anchor" prefHeight="598.0" prefWidth="822.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.MainPackage.Controller">
+<BorderPane fx:id="anchor" prefHeight="598.0" prefWidth="869.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="main.java.MainPackage.Controller">
     <center>
         <AnchorPane prefHeight="568.0" prefWidth="390.0" style="-fx-background-color: #8FBC8F;">
             <WebView fx:id="wvMeaning" layoutX="22.0" layoutY="63.0" prefHeight="495.0" prefWidth="502.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="22.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="63.0" />
             <Button fx:id="btBack" layoutX="10.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseReleased="#thePreviousWords" textAlignment="CENTER" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="14.0">
 
             </Button>
-            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="56.0" text="speak" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
+            <Button fx:id="btSpeaker" layoutX="316.0" layoutY="15.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="71.0" text="speak" textAlignment="CENTER" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="14.0">
             </Button>
             <Button fx:id="btAPI" layoutX="375.0" layoutY="14.0" mnemonicParsing="false" textAlignment="CENTER" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
 
@@ -28,7 +28,7 @@
         </AnchorPane>
     </center>
     <top>
-        <MenuBar prefHeight="30.0" prefWidth="822.0" BorderPane.alignment="CENTER">
+        <MenuBar prefHeight="0.0" prefWidth="803.0" BorderPane.alignment="CENTER">
             <Menu mnemonicParsing="false" text="Dictionary" visible="false">
 
             </Menu>
@@ -57,7 +57,7 @@
         </MenuBar>
     </top>
     <left>
-        <AnchorPane prefHeight="568.0" prefWidth="288.0" style="-fx-background-color: #0e918c;" BorderPane.alignment="CENTER">
+        <AnchorPane prefHeight="573.0" prefWidth="350.0" style="-fx-background-color: #0e918c;" BorderPane.alignment="CENTER">
             <Button fx:id="btSearch" layoutX="167.0" layoutY="14.0" mnemonicParsing="false" onAction="#eventHandler" onMouseClicked="#eventHandler" text="Search" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="14.0">
             <cursor>
                <Cursor fx:constant="HAND" />
