@@ -1,6 +1,6 @@
 package API;
 
-import DatabaseConn.MySQLCutie;
+import main.java.DatabaseConn.MySQLCutie;
 import com.darkprograms.speech.translator.GoogleTranslate;
 import com.gtranslate.Audio;
 import com.gtranslate.Language;

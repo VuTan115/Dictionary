@@ -1,6 +1,6 @@
 package MainPackage;
 
-import DatabaseConn.MySQLCutie;
+import main.java.DatabaseConn.MySQLCutie;
 
 import com.gtranslate.Audio;
 import com.gtranslate.Language;

@@ -1,4 +1,4 @@
-package DatabaseConn;
+package main.java.DatabaseConn;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -8,7 +8,7 @@ public class MySQLCutie {
 
     static public String url = "jdbc:mysql://localhost:3306/wjbu";
     static public String user = "root";
-    static public String password = "root";
+    static public String password = "vucaotan200147";
 
     static public String dbname = "wjbu";
     static public String tbnameAV = "av";
