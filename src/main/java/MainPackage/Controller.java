@@ -12,6 +12,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.ContextMenuEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.web.WebView;
 import javafx.stage.Modality;
@@ -20,7 +21,9 @@ import javazoom.jl.decoder.JavaLayerException;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -144,6 +147,8 @@ public class Controller implements Initializable {
         btSpeakHandle();
 
         btAPIHandler();
+
+        contextMenu();
     }
 
     /** Minimize the word list. */
@@ -277,6 +282,39 @@ public class Controller implements Initializable {
     public void addWord() {
         miAdd.setOnAction(new EventHandler<ActionEvent>() {
             public void handle(ActionEvent t) {
+                addH();
+            }
+        });
+    }
+
+    public void addH() {
+        MySQLCutie.currentWord = "";
+        MySQLCutie.currentMeaning = "";
+        try {
+            Parent rootEdit = FXMLLoader.load(getClass().getResource("/Edit.fxml"));
+            Stage stage = new Stage();
+            stage.initModality(Modality.APPLICATION_MODAL);
+            stage.setTitle("Add Window");
+            stage.setScene(new Scene(rootEdit, 600, 500));
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    /** Edit word. */
+    public void editWord() {
+        miEdit.setOnAction(new EventHandler<ActionEvent>() {
+            public void handle(ActionEvent t) {
+                editH();
+            }
+
+        });
+    }
+
+    public void editH() {
+        try {
+            if (MySQLCutie.currentWord.equals("")) {
                 MySQLCutie.currentWord = "";
                 MySQLCutie.currentMeaning = "";
                 try {
@@ -290,63 +328,65 @@ public class Controller implements Initializable {
                     e.printStackTrace();
                 }
             }
-        });
-    }
-
-    /** Edit word. */
-    public void editWord() {
-        miEdit.setOnAction(new EventHandler<ActionEvent>() {
-            public void handle(ActionEvent t) {
-                try {
-                    if (MySQLCutie.currentWord.equals("")) {
-                        MySQLCutie.currentWord = "";
-                        MySQLCutie.currentMeaning = "";
-                        try {
-                            Parent rootEdit = FXMLLoader.load(getClass().getResource("/Edit.fxml"));
-                            Stage stage = new Stage();
-                            stage.initModality(Modality.APPLICATION_MODAL);
-                            stage.setTitle("Add Window");
-                            stage.setScene(new Scene(rootEdit, 600, 500));
-                            stage.show();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else {
-                        Parent rootEdit = FXMLLoader.load(getClass().getResource("/Edit.fxml"));
-                        Stage stage = new Stage();
-                        stage.initModality(Modality.APPLICATION_MODAL);
-                        stage.setTitle("Edit Window");
-                        stage.setScene(new Scene(rootEdit, 600, 500));
-                        stage.show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+            else {
+                Parent rootEdit = FXMLLoader.load(getClass().getResource("/Edit.fxml"));
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("Edit Window");
+                stage.setScene(new Scene(rootEdit, 600, 500));
+                stage.show();
             }
-
-        });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     /** Delete word. */
     public void deleteWord() {
         miDelete.setOnAction(mouseEvent -> {
-            if (!MySQLCutie.currentWord.equals("")) {
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Deleting confirmation");
-                alert.setHeaderText(null);
-                alert.setContentText("If deleted, the data will be lost. Are you sure?");
-                Optional<ButtonType> action = alert.showAndWait();
-                if (action.isPresent() && action.get() == ButtonType.OK) {
-                    String query = "DELETE FROM " + MySQLCutie.currenttb + " WHERE (`id` = '" + MySQLCutie.currentId + "');";
-                    try {
-                        MySQLCutie.state.executeUpdate(query);
-                    } catch (SQLException throwables) {
-                        throwables.printStackTrace();
-                    }
+            deleteH();
+        });
+    }
+
+    public void deleteH() {
+        if (!MySQLCutie.currentWord.equals("")) {
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Deleting confirmation");
+            alert.setHeaderText(null);
+            alert.setContentText("If deleted, the data will be lost. Are you sure?");
+            Optional<ButtonType> action = alert.showAndWait();
+            if (action.isPresent() && action.get() == ButtonType.OK) {
+                String query = "DELETE FROM " + MySQLCutie.currenttb + " WHERE (`id` = '" + MySQLCutie.currentId + "');";
+                try {
+                    MySQLCutie.state.executeUpdate(query);
+                } catch (SQLException throwables) {
+                    throwables.printStackTrace();
                 }
             }
-        });
+        }
+    }
+
+    public static boolean checkNetwork() {
+        try {
+            URL url = new URL("http://www.google.com");
+            URLConnection connection = url.openConnection();
+            connection.connect();
+        } catch (MalformedURLException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Network error");
+            alert.setHeaderText(null);
+            alert.setContentText("NO INTERNET ACCESS");
+            alert.showAndWait();
+            return false;
+        } catch (IOException e) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Network error");
+            alert.setHeaderText(null);
+            alert.setContentText("NO INTERNET ACCESS");
+            alert.showAndWait();
+            return false;
+        }
+        return true;
     }
 
     public void btAPIHandler() {
@@ -357,11 +397,15 @@ public class Controller implements Initializable {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Stage stage = new Stage();
-            stage.initModality(Modality.APPLICATION_MODAL);
-            stage.setTitle("API Window");
-            stage.setScene(new Scene(rootEdit, 600, 500));
-            stage.show();
+
+            if(checkNetwork()) {
+
+                Stage stage = new Stage();
+                stage.initModality(Modality.APPLICATION_MODAL);
+                stage.setTitle("API Window");
+                stage.setScene(new Scene(rootEdit, 600, 500));
+                stage.show();
+            }
         });
     }
 
@@ -370,27 +414,68 @@ public class Controller implements Initializable {
      */
     public void btSpeakHandle() {
         btSpeaker.setOnMouseClicked(mouseEvent -> {
-            String searchedWord = MySQLCutie.currentWord;
-            if (!searchedWord.equals("")) {
-                try {
+            if(checkNetwork()) {
+                String searchedWord = MySQLCutie.currentWord;
+                if (!searchedWord.equals("")) {
+                    try {
 
-                    if (MySQLCutie.currenttb.equals(MySQLCutie.tbnameAV)) {
-                        Audio audio = Audio.getInstance();
-                        InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.ENGLISH);
-                        audio.play(sound);
-                    } else {
-                        Audio audio = Audio.getInstance();
-                        InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.VIETNAMESE);
-                        audio.play(sound);
+                        if (MySQLCutie.currenttb.equals(MySQLCutie.tbnameAV)) {
+                            Audio audio = Audio.getInstance();
+                            InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.ENGLISH);
+                            audio.play(sound);
+                        } else {
+                            Audio audio = Audio.getInstance();
+                            InputStream sound = audio.getAudio(searchedWord + "&client=tw-ob", Language.VIETNAMESE);
+                            audio.play(sound);
+                        }
+                    } catch (IOException | JavaLayerException e) {
+                        System.out.println(e.getMessage());
                     }
-                } catch (IOException | JavaLayerException e) {
-                    System.out.println(e.getMessage());
                 }
             }
         });
 
     }
 
+    /** Context Menu. */
+    public void contextMenu() {
+        final ContextMenu contextMenu = new ContextMenu();
+        MenuItem item1 = new MenuItem("Add word");
+        item1.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                addH();
+            }
+        });
+
+        MenuItem item2 = new MenuItem("Delete word");
+        item2.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                deleteH();
+            }
+        });
+
+        MenuItem item3 = new MenuItem("Edit word");
+        item3.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                editH();
+            }
+        });
+
+        wvMeaning.setContextMenuEnabled(false);
+
+        contextMenu.getItems().addAll(item1, item2, item3);
+
+        wvMeaning.setOnContextMenuRequested(new EventHandler<ContextMenuEvent>() {
+            @Override
+            public void handle(ContextMenuEvent event) {
+                contextMenu.show(wvMeaning, event.getScreenX(), event.getScreenY());
+            }
+        });
+
+    }
 
     /** Closing. */
     public void tsukareta() {
